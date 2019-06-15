@@ -39,11 +39,11 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright  2009 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class qbehaviour_immediatefeedback extends question_behaviour_with_save {
+class qbehaviour_immediateprogrammingtask extends question_behaviour_with_save {
     const IS_ARCHETYPAL = true;
 
     public function is_compatible_question(question_definition $question) {
-        return $question instanceof question_automatically_gradable;
+        return $question instanceof qtype_programmingtask_question;
     }
 
     public function can_finish_during_attempt() {

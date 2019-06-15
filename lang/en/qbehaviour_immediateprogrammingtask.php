@@ -24,5 +24,5 @@
  */
 
 $string['notcomplete'] = 'Not complete';
-$string['pluginname'] = 'Immediate feedback';
-$string['privacy:metadata'] = 'The Immediate feedback question behaviour plugin does not store any personal data.';
+$string['pluginname'] = 'Immediate feedback for programming tasks';
+$string['privacy:metadata'] = 'The programming task immediate feedback question behaviour plugin does not store any personal data.';
