@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -23,10 +24,7 @@
  * @copyright  2009 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-
 defined('MOODLE_INTERNAL') || die();
-
 
 /**
  * Question behaviour for immediate feedback.
@@ -40,6 +38,7 @@ defined('MOODLE_INTERNAL') || die();
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qbehaviour_immediateprogrammingtask extends question_behaviour_with_save {
+
     const IS_ARCHETYPAL = true;
 
     public function is_compatible_question(question_definition $question) {
@@ -100,6 +99,27 @@ class qbehaviour_immediateprogrammingtask extends question_behaviour_with_save {
         }
     }
 
+    /**
+     * Only differs from parent implementation in that it sets a  flag on the first execution and
+     * doesn't keep this step if the flag has already been set. This is important in the face of regrades.
+     * When a submission is regraded the comment and the mark refer to the old version of the grading result,
+     * therefore we don't include the comment and the mark in the regrading.
+     * @global type $DB
+     * @param \question_attempt_pending_step $pendingstep
+     * @return bool
+     */
+    public function process_comment(\question_attempt_pending_step $pendingstep): bool {
+        global $DB;
+        if ($DB->record_exists('question_attempt_step_data', array('attemptstepid' => $pendingstep->get_id(), 'name' => '-_appliedFlag'))) {
+            return question_attempt::DISCARD;
+        }
+
+        $parentReturn = parent::process_comment($pendingstep);
+
+        $pendingstep->set_behaviour_var('_appliedFlag', '1');
+        return $parentReturn;
+    }
+
     public function process_submit(question_attempt_pending_step $pendingstep) {
         if ($this->qa->get_state()->is_finished()) {
             return question_attempt::DISCARD;
@@ -107,11 +127,9 @@ class qbehaviour_immediateprogrammingtask extends question_behaviour_with_save {
 
         if (!$this->is_complete_response($pendingstep)) {
             $pendingstep->set_state(question_state::$invalid);
-
         } else {
             $response = $pendingstep->get_qt_data();
-            list($fraction, $state) = $this->question->grade_response($response);
-            $pendingstep->set_fraction($fraction);
+            $state = $this->question->grade_response_asynch($this->qa);
             $pendingstep->set_state($state);
             $pendingstep->set_new_response_summary($this->question->summarise_response($response));
         }
@@ -126,10 +144,9 @@ class qbehaviour_immediateprogrammingtask extends question_behaviour_with_save {
         $response = $this->qa->get_last_step()->get_qt_data();
         if (!$this->question->is_gradable_response($response)) {
             $pendingstep->set_state(question_state::$gaveup);
-
+            $pendingstep->set_fraction($this->get_min_fraction());
         } else {
-            list($fraction, $state) = $this->question->grade_response($response);
-            $pendingstep->set_fraction($fraction);
+            $state = $this->question->grade_response_asynch($this->qa);
             $pendingstep->set_state($state);
         }
         $pendingstep->set_new_response_summary($this->question->summarise_response($response));
@@ -144,4 +161,5 @@ class qbehaviour_immediateprogrammingtask extends question_behaviour_with_save {
         }
         return $status;
     }
+
 }
