@@ -137,7 +137,8 @@ class qbehaviour_immediateprogrammingtask extends question_behaviour_with_save {
             $pendingstep->set_state(question_state::$invalid);
         } else {
             $response = $pendingstep->get_qt_data();
-            $state = $this->question->grade_response_asynch($this->qa);
+            $question_file_saver = $pendingstep->get_qt_var('answerfiles');
+            $state = $this->question->grade_response_asynch($this->qa, $question_file_saver->get_files());
             $pendingstep->set_state($state);
             $pendingstep->set_new_response_summary($this->question->summarise_response($response));
         }
