@@ -129,6 +129,8 @@ class qbehaviour_immediateprogrammingtask extends question_behaviour_with_save {
     }
 
     public function process_submit(question_attempt_pending_step $pendingstep) {
+        global $DB;
+
         if ($this->qa->get_state()->is_finished()) {
             return question_attempt::DISCARD;
         }
@@ -138,7 +140,15 @@ class qbehaviour_immediateprogrammingtask extends question_behaviour_with_save {
         } else {
             $response = $pendingstep->get_qt_data();
             $question_file_saver = $pendingstep->get_qt_var('answerfiles');
-            $state = $this->question->grade_response_asynch($this->qa, $question_file_saver->get_files());
+            if ($question_file_saver instanceof question_file_saver) {
+                $responsefiles = $question_file_saver->get_files();
+            } else {
+                //We are in a regrade
+                $record = $DB->get_record('question_usages', array('id' => $this->qa->get_usage_id()), 'contextid');
+                $quba_context_id = $record->contextid;
+                $responsefiles = $pendingstep->get_qt_files('answerfiles', $quba_context_id);
+            }
+            $state = $this->question->grade_response_asynch($this->qa, $responsefiles);
             $pendingstep->set_state($state);
             $pendingstep->set_new_response_summary($this->question->summarise_response($response));
         }
