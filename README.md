@@ -7,7 +7,7 @@ If you want to use multiple types of questions in a quiz (other than programming
 - else use moodle-qtype_deferredprogrammingtask
 
 # Usage
-If you want students to be able to redo questions without finishing the current quiz and starting a new one one, you should enable "Allow redo within an attempt" which is located in the quiz settings under "Question behaviour" and appears when you click on "Show more...".
+If you want students to be able to redo particular questions without finishing the whole quiz and starting a new one one, you need to enable "Allow redo within an attempt" which is located in the quiz settings under "Question behaviour" and appears when you click on "Show more...". Also you need to enable "Review options" -> "During this attempt" -> "Specific feedback". Furthermore it might be useful to enable "Review options" -> "During this attempt" -> "Whether correct" and "Review options" -> "During this attempt" -> "Marks".
 
 ## License ##
 
