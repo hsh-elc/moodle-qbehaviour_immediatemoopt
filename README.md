@@ -6,6 +6,9 @@ If you want to use multiple types of questions in a quiz (other than programming
 - if the selected behaviours name starts with "immediate", use moodle-qtype_immediateprogrammingtask
 - else use moodle-qtype_deferredprogrammingtask
 
+# Usage
+If you want students to be able to redo questions without finishing the current quiz and starting a new one one, you should enable "Allow redo within an attempt" which is located in the quiz settings under "Question behaviour" and appears when you click on "Show more...".
+
 ## License ##
 
 2019 ZLB-ELC Hochschule Hannover <elc@hs-hannover.de>
