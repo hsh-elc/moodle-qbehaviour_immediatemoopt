@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -95,13 +94,17 @@ class qbehaviour_immediateprogrammingtask extends question_behaviour_with_save {
         if ($step->has_behaviour_var('comment')) {
             return $this->summarise_manual_comment($step);
         } else if ($step->has_behaviour_var('finish')) {
-            return get_string('finished', 'qbehaviour_immediateprogrammingtask', get_string('gradingsummary', 'qbehaviour_immediateprogrammingtask'));
+            return get_string('finished', 'qbehaviour_immediateprogrammingtask',
+                    get_string('gradingsummary', 'qbehaviour_immediateprogrammingtask'));
         } else if ($step->has_behaviour_var('submit')) {
-            return get_string('submitted', 'question', get_string('gradingsummary', 'qbehaviour_immediateprogrammingtask'));
+            return get_string('submitted', 'question',
+                    get_string('gradingsummary', 'qbehaviour_immediateprogrammingtask'));
         } else if ($step->has_behaviour_var('gradingresult')) {
-            return get_string('graded', 'qbehaviour_immediateprogrammingtask', get_string('gradedsummary', 'qbehaviour_immediateprogrammingtask'));
+            return get_string('graded', 'qbehaviour_immediateprogrammingtask',
+                    get_string('gradedsummary', 'qbehaviour_immediateprogrammingtask'));
         } else if ($step->has_behaviour_var('graderunavailable')) {
-            return get_string('grading', 'qbehaviour_immediateprogrammingtask', get_string('graderunavailable', 'qbehaviour_immediateprogrammingtask'));
+            return get_string('grading', 'qbehaviour_immediateprogrammingtask',
+                    get_string('graderunavailable', 'qbehaviour_immediateprogrammingtask'));
         } else {
             return $this->summarise_save($step);
         }
@@ -118,14 +121,15 @@ class qbehaviour_immediateprogrammingtask extends question_behaviour_with_save {
      */
     public function process_comment(\question_attempt_pending_step $pendingstep): bool {
         global $DB;
-        if ($DB->record_exists('question_attempt_step_data', array('attemptstepid' => $pendingstep->get_id(), 'name' => '-_appliedFlag'))) {
+        if ($DB->record_exists('question_attempt_step_data',
+                        array('attemptstepid' => $pendingstep->get_id(), 'name' => '-_appliedFlag'))) {
             return question_attempt::DISCARD;
         }
 
-        $parentReturn = parent::process_comment($pendingstep);
+        $parentreturn = parent::process_comment($pendingstep);
 
         $pendingstep->set_behaviour_var('_appliedFlag', '1');
-        return $parentReturn;
+        return $parentreturn;
     }
 
     public function process_submit(question_attempt_pending_step $pendingstep) {
@@ -140,14 +144,14 @@ class qbehaviour_immediateprogrammingtask extends question_behaviour_with_save {
         } else {
             $response = $pendingstep->get_qt_data();
             if ($this->question->enablefilesubmissions) {
-                $question_file_saver = $pendingstep->get_qt_var('answerfiles');
-                if ($question_file_saver instanceof question_file_saver) {
-                    $responsefiles = $question_file_saver->get_files();
+                $questionfilesaver = $pendingstep->get_qt_var('answerfiles');
+                if ($questionfilesaver instanceof question_file_saver) {
+                    $responsefiles = $questionfilesaver->get_files();
                 } else {
-                    //We are in a regrade
+                    // We are in a regrade.
                     $record = $DB->get_record('question_usages', array('id' => $this->qa->get_usage_id()), 'contextid');
-                    $quba_context_id = $record->contextid;
-                    $responsefiles = $pendingstep->get_qt_files('answerfiles', $quba_context_id);
+                    $qubacontextid = $record->contextid;
+                    $responsefiles = $pendingstep->get_qt_files('answerfiles', $qubacontextid);
                 }
             }
             $freetextanswers = [];
@@ -158,9 +162,10 @@ class qbehaviour_immediateprogrammingtask extends question_behaviour_with_save {
                     if ($text == '') {
                         continue;
                     }
-                    $record = $DB->get_record('qtype_programmingtask_fts', ['questionid' => $this->question->id, 'inputindex' => $i]);
-                    $filename = $response["answerfilename$i"] ?? '';        //By default use submitted filename
-                    //Overwrite filename if necessary
+                    $record = $DB->get_record('qtype_programmingtask_fts',
+                            ['questionid' => $this->question->id, 'inputindex' => $i]);
+                    $filename = $response["answerfilename$i"] ?? '';        // By default use submitted filename.
+                    // Overwrite filename if necessary.
                     if ($record) {
                         if ($record->presetfilename) {
                             $filename = $record->filename;
@@ -197,10 +202,10 @@ class qbehaviour_immediateprogrammingtask extends question_behaviour_with_save {
         } else {
 
             if ($this->question->enablefilesubmissions) {
-                //We are in a regrade
+                // We are in a regrade.
                 $record = $DB->get_record('question_usages', array('id' => $this->qa->get_usage_id()), 'contextid');
-                $quba_context_id = $record->contextid;
-                $responsefiles = $this->qa->get_last_qt_files('answerfiles', $quba_context_id);
+                $qubacontextid = $record->contextid;
+                $responsefiles = $this->qa->get_last_qt_files('answerfiles', $qubacontextid);
             }
 
             if ($this->question->enablefreetextsubmissions) {
@@ -210,9 +215,10 @@ class qbehaviour_immediateprogrammingtask extends question_behaviour_with_save {
                     if ($text == '') {
                         continue;
                     }
-                    $record = $DB->get_record('qtype_programmingtask_fts', ['questionid' => $this->question->id, 'inputindex' => $i]);
-                    $filename = $response["answerfilename$i"] ?? '';        //By default use submitted filename
-                    //Overwrite filename if necessary
+                    $record = $DB->get_record('qtype_programmingtask_fts',
+                            ['questionid' => $this->question->id, 'inputindex' => $i]);
+                    $filename = $response["answerfilename$i"] ?? '';        // By default use submitted filename.
+                    // Overwrite filename if necessary.
                     if ($record) {
                         if ($record->presetfilename) {
                             $filename = $record->filename;
@@ -231,6 +237,7 @@ class qbehaviour_immediateprogrammingtask extends question_behaviour_with_save {
             $state = $this->question->grade_response_asynch($this->qa, $responsefiles ?? [], $freetextanswers ?? []);
             $pendingstep->set_state($state);
             $pendingstep->set_new_response_summary($this->question->summarise_response($response));
+            $pendingstep->set_fraction($this->get_min_fraction());
         }
         return question_attempt::KEEP;
     }
@@ -250,7 +257,7 @@ class qbehaviour_immediateprogrammingtask extends question_behaviour_with_save {
         $processdbid = $pendingstep->get_qt_var('gradeprocessdbid');
         $exists = $DB->record_exists('qtype_programmingtask_grprcs', ['id' => $processdbid]);
         if (!$exists) {
-            //It's a regrade, discard this *old* result
+            // It's a regrade, discard this *old* result.
             return question_attempt::DISCARD;
         }
 
@@ -261,11 +268,13 @@ class qbehaviour_immediateprogrammingtask extends question_behaviour_with_save {
         $pendingstep->set_state(question_state::graded_state_for_fraction($fraction));
         $pendingstep->set_new_response_summary($this->question->summarise_response($pendingstep->get_all_data()));
 
-        //If this is the real result for a regrade we should update the quiz_overview_regrades table to properly display the new result
-        $regrade_record = $DB->get_record('quiz_overview_regrades', ['questionusageid' => $this->qa->get_usage_id(), 'slot' => $this->qa->get_slot()]);
-        if ($regrade_record) {
-            $regrade_record->newfraction = $fraction;
-            $DB->update_record('quiz_overview_regrades', $regrade_record);
+        // If this is the real result for a regrade we should update the quiz_overview_regrades table
+        // to properly display the new result.
+        $regraderecord = $DB->get_record('quiz_overview_regrades',
+                ['questionusageid' => $this->qa->get_usage_id(), 'slot' => $this->qa->get_slot()]);
+        if ($regraderecord) {
+            $regraderecord->newfraction = $fraction;
+            $DB->update_record('quiz_overview_regrades', $regraderecord);
         }
 
         return question_attempt::KEEP;
@@ -277,7 +286,7 @@ class qbehaviour_immediateprogrammingtask extends question_behaviour_with_save {
         $processdbid = $pendingstep->get_qt_var('gradeprocessdbid');
         $exists = $DB->record_exists('qtype_programmingtask_grprcs', ['id' => $processdbid]);
         if (!$exists) {
-            //It's a regrade, discard this old step
+            // It's a regrade, discard this old step.
             return question_attempt::DISCARD;
         }
 
