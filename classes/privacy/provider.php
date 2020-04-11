@@ -15,6 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Original code from:
  * Privacy Subsystem implementation for qbehaviour_immediatefeedback.
  *
  * @package    qbehaviour_immediatefeedback
@@ -22,7 +23,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace qbehaviour_immediatefeedback\privacy;
+namespace qbehaviour_immediateprogrammingtask\privacy;
 
 defined('MOODLE_INTERNAL') || die();
 
