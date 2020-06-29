@@ -144,14 +144,14 @@ class qbehaviour_immediateprogrammingtask extends question_behaviour_with_save {
         } else {
             $response = $pendingstep->get_qt_data();
             if ($this->question->enablefilesubmissions) {
-                $questionfilesaver = $pendingstep->get_qt_var('answerfiles');
+                $questionfilesaver = $pendingstep->get_qt_var('answer');
                 if ($questionfilesaver instanceof question_file_saver) {
                     $responsefiles = $questionfilesaver->get_files();
                 } else {
                     // We are in a regrade.
                     $record = $DB->get_record('question_usages', array('id' => $this->qa->get_usage_id()), 'contextid');
                     $qubacontextid = $record->contextid;
-                    $responsefiles = $pendingstep->get_qt_files('answerfiles', $qubacontextid);
+                    $responsefiles = $pendingstep->get_qt_files('answer', $qubacontextid);
                 }
             }
             $freetextanswers = [];
@@ -205,7 +205,7 @@ class qbehaviour_immediateprogrammingtask extends question_behaviour_with_save {
                 // We are in a regrade.
                 $record = $DB->get_record('question_usages', array('id' => $this->qa->get_usage_id()), 'contextid');
                 $qubacontextid = $record->contextid;
-                $responsefiles = $this->qa->get_last_qt_files('answerfiles', $qubacontextid);
+                $responsefiles = $this->qa->get_last_qt_files('answer', $qubacontextid);
             }
 
             if ($this->question->enablefreetextsubmissions) {
