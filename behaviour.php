@@ -280,7 +280,7 @@ class qbehaviour_immediateprogrammingtask extends question_behaviour_with_save {
         return question_attempt::KEEP;
     }
 
-    public function process_graderunavilable(question_attempt_pending_step $pendingstep) {
+    public function process_graderunavailable(question_attempt_pending_step $pendingstep) {
         global $DB;
 
         $processdbid = $pendingstep->get_qt_var('gradeprocessdbid');
