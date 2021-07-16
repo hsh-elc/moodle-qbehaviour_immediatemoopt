@@ -84,7 +84,7 @@ class qbehaviour_immediateprogrammingtask extends question_behaviour_with_save {
         } else if ($pendingstep->has_behaviour_var('gradingresult')) {
             return $this->process_gradingresult($pendingstep);
         } else if ($pendingstep->has_behaviour_var('graderunavailable')) {
-            return $this->process_graderunavilable($pendingstep);
+            return $this->process_graderunavailable($pendingstep);
         } {
             return $this->process_save($pendingstep);
         }
