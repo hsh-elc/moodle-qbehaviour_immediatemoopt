@@ -29,5 +29,5 @@ $string['grading'] = 'Grading: {$a}';
 $string['gradingsummary'] = 'The submission has been sent to the grader for grading.';
 $string['gradedsummary'] = 'The submission has been graded by the grader';
 $string['notcomplete'] = 'Not complete';
-$string['pluginname'] = 'Immediate feedback for programming tasks';
-$string['privacy:metadata'] = 'The programming task immediate feedback question behaviour plugin does not store any personal data.';
+$string['pluginname'] = 'Immediate feedback for Moodle Programming Tasks (MooPT)';
+$string['privacy:metadata'] = 'The MooPT immediate feedback question behaviour plugin does not store any personal data.';

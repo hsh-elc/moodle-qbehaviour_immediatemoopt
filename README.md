@@ -1,10 +1,11 @@
-# moodle-qbehaviour_immediateprogrammingtask
+# moodle-qbehaviour_immediatemoopt
 
-This behaviour is only intended to be used with programming task questions.
-If you want to use multiple types of questions in a quiz (other than programming task questions), don't use this behaviour. Programming task questions will automatically pick the correct bevaviour according to the following algorithm:
-- if the selected behaviour is a programming task behaviour, use it
-- if the selected behaviours name starts with "immediate", use moodle-qtype_immediateprogrammingtask
-- else use moodle-qtype_deferredprogrammingtask
+This behaviour is only intended to be used with MooPT questions.
+If you want to use multiple types of questions in a quiz (other than MooPT questions), don't use this behaviour. 
+MooPT questions will automatically pick the correct bevaviour according to the following algorithm:
+- if the selected behaviour is a MooPT-specific behaviour, use it
+- if the selected behaviours name starts with "immediate", use moodle-qtype_immediatemoopt
+- else use moodle-qtype_deferredmoopt
 
 # Usage
 If you want students to be able to redo particular questions without finishing the whole quiz and starting a new one one, you need to enable "Allow redo within an attempt" which is located in the quiz settings under "Question behaviour" and appears when you click on "Show more...". Also you need to enable "Review options" -> "During this attempt" -> "Specific feedback". Furthermore it might be useful to enable "Review options" -> "During this attempt" -> "Whether correct" and "Review options" -> "During this attempt" -> "Marks".

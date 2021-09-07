@@ -23,7 +23,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace qbehaviour_immediateprogrammingtask\privacy;
+namespace qbehaviour_immediatemoopt\privacy;
 
 defined('MOODLE_INTERNAL') || die();
 

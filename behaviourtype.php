@@ -32,7 +32,7 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright  2012 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class qbehaviour_immediateprogrammingtask_type extends question_behaviour_type {
+class qbehaviour_immediatemoopt_type extends question_behaviour_type {
     public function is_archetypal() {
         return true;
     }
