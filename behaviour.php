@@ -38,8 +38,6 @@ defined('MOODLE_INTERNAL') || die();
  */
 class qbehaviour_immediatemoopt extends question_behaviour_with_save {
 
-    const IS_ARCHETYPAL = true;
-
     public function is_compatible_question(question_definition $question) {
         return $question instanceof qtype_moopt_question;
     }
